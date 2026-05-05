@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Other Expense</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <h1>Other Expense</h1>
+      </header>
+
+      <section class="panel" aria-labelledby="form-title">
+        <h2 id="form-title">บันทึกค่าใช้จ่ายอื่น</h2>
+
+        <form id="expense-form" novalidate>
+          <div class="field">
+            <label for="payment-date">วันที่จ่าย</label>
+            <input id="payment-date" name="payment-date" type="date" required>
+            <p class="error-message" id="payment-date-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="expense-type">ประเภท</label>
+            <select id="expense-type" name="expense-type" required>
+              <option value="">เลือกประเภท</option>
+              <option value="เงินคืนจากการคืนสินค้า">เงินคืนจากการคืนสินค้า</option>
+              <option value="เงินเดือนพนักงาน">เงินเดือนพนักงาน</option>
+              <option value="เงินเดือนผู้จัดการ">เงินเดือนผู้จัดการ</option>
+              <option value="เงินเดือนเถ้าแก่">เงินเดือนเถ้าแก่</option>
+              <option value="ค่าน้ำ">ค่าน้ำ</option>
+              <option value="ค่าไฟ">ค่าไฟ</option>
+              <option value="ค่าเช่า">ค่าเช่า</option>
+              <option value="ค่าเน็ต">ค่าเน็ต</option>
+              <option value="เงินคืนแม่">เงินคืนแม่</option>
+            </select>
+            <p class="error-message" id="expense-type-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="amount-input">ยอดที่จ่าย</label>
+            <input
+              id="amount-input"
+              name="amount-input"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              placeholder="กรอกยอดที่จ่าย เช่น 4500"
+              required
+            >
+            <p class="error-message" id="amount-input-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="note-input">หมายเหตุ</label>
+            <textarea id="note-input" name="note-input" rows="3"></textarea>
+            <p class="hint hidden" id="note-hint">ประเภทนี้ควรใส่หมายเหตุ เช่น ชื่อพนักงาน รอบเงินเดือน หรือรายละเอียดการคืนเงิน</p>
+            <p class="error-message" id="note-input-error"></p>
+          </div>
+
+          <div class="button-grid">
+            <button class="primary-button" id="save-button" type="submit">บันทึก</button>
+            <button class="secondary-button" id="reset-form-button" type="button">ล้างฟอร์ม</button>
+            <button class="secondary-button" id="export-csv-button" type="button">Export CSV</button>
+            <button class="danger-button" id="clear-local-button" type="button">ล้างข้อมูลในเครื่องทั้งหมด</button>
+          </div>
+        </form>
+
+        <div class="status-area" aria-live="polite">
+          <p class="status-message" id="status-message"></p>
+          <p class="status-error" id="status-error"></p>
+        </div>
+      </section>
+
+      <section class="panel records-panel" aria-labelledby="records-title">
+        <div class="section-heading">
+          <h2 id="records-title">รายการในเครื่อง</h2>
+          <p id="selected-date-label"></p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ปี</th>
+                <th>เดือน</th>
+                <th>วัน</th>
+                <th>ประเภท</th>
+                <th>ยอดที่จ่าย</th>
+                <th>หมายเหตุ</th>
+                <th>สถานะ</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="records-body"></tbody>
+          </table>
+        </div>
+
+        <p class="empty-state" id="empty-state">ยังไม่มีข้อมูลสำหรับวันที่เลือก</p>
+        <p class="table-note">หมายเหตุ: สถานะนี้เป็นสถานะการส่งจากเครื่องนี้ไปยัง Google Sheet ปุ่มลบจะลบเฉพาะข้อมูลในเครื่อง ไม่ได้ลบข้อมูลใน Google Sheet</p>
+      </section>
+    </main>
+
+    <div class="modal-backdrop hidden" id="success-modal" role="dialog" aria-modal="true" aria-labelledby="success-title">
+      <div class="modal-card">
+        <h2 id="success-title">บันทึกสำเร็จ</h2>
+        <dl class="summary-list" id="success-summary"></dl>
+        <div class="modal-actions">
+          <button class="primary-button" id="next-entry-button" type="button">เพิ่มรายการถัดไป</button>
+          <button class="secondary-button" id="close-modal-button" type="button">ปิด</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
